@@ -57,6 +57,36 @@ jobs:
 
       - name: 🛠 Build
         run: make build
+        
+  build-aarch64:
+    strategy:
+      matrix:
+        pyver: [ cp38-cp38 ]
+      fail-fast: false
+    runs-on: ubuntu-latest
+    env:
+      py: /opt/python/${{ matrix.pyver }}/bin/python
+      img: quay.io/pypa/manylinux2014_aarch64
+      
+    steps:
+      - name: 📥 Checkout the repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 🛠️ Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: 📦 Install dependencies
+        run: make requirements
+
+      - name: 🏃 Run tests
+        run: make test
+
+      - name: 🛠 Build
+        run: make build
 
   coverage:
     name: Coverage
