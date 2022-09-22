@@ -25,3 +25,9 @@ jobs:
           command: |
             . venv/bin/activate
             make isort-check 
+            
+workflows:
+ version: 2
+ python3.9:
+   jobs:
+     - lint-unit-39
