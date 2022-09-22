@@ -1,0 +1,28 @@
+version: 2.1
+orbs:
+  win: circleci/windows@2.4.0
+jobs:
+
+  lint-unit-39: &lint-unit
+    docker:
+      - image: circleci/python:3.6.1
+    steps:
+      - checkout
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            make requirements
+            make black-check
+            make isort-check
+      - run:
+          name: run tests
+          command: |
+            . venv/bin/activate
+            black --check setup.py flask_appbuilder 
+workflows:
+version: 2
+python3.9:
+  jobs:
+    - lint-unit-39
