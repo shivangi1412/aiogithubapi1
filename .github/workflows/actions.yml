@@ -61,7 +61,7 @@ jobs:
   build-aarch64:
     strategy:
       matrix:
-        pyver: [ cp38-cp38 ]
+        pyver: [ cp38-cp38, cp39-cp39 ]
       fail-fast: false
     runs-on: ubuntu-latest
     env:
