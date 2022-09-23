@@ -14,6 +14,9 @@ install: ## Install aiogithubapi
 
 install-poetry:
 	@curl -sSL https://install.python-poetry.org | python3 -
+	
+path-poetry:
+        @export PATH="/root/.local/bin:$PATH"
 
 build: ## Build the package
 	@poetry build
