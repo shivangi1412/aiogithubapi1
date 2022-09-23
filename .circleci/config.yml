@@ -17,8 +17,10 @@ jobs:
              sudo apt install python3
              sudo apt-get install python3-pip
              pip3 install tox
-             make requirements
+             curl -sSL https://install.python-poetry.org | python3 -
              export PATH="/root/.local/bin:$PATH"
+             make requirements
+             
       - run:
           name: ️️test
           command: |
