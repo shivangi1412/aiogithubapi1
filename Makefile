@@ -14,6 +14,7 @@ install: ## Install aiogithubapi
 
 install-poetry:
 	@curl -sSL https://install.python-poetry.org | python3 -
+	@export PATH="/home/circleci/.local/bin:$PATH"
 	
 build: ## Build the package
 	@poetry build
