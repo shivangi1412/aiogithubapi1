@@ -14,8 +14,9 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            sudo apt-get update
+            sudo apt update && sudo apt upgrade
             sudo apt-get install -y python-dev libldap2-dev libsasl2-dev libssl-dev
+            sudo apt install curl
             python --version
             pip install --upgrade pip
             make requirements
