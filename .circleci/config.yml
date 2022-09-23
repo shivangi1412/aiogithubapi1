@@ -3,34 +3,27 @@ orbs:
   win: circleci/windows@2.4.0
 jobs:
 
-  lint-unit-39: &lint-unit
-    docker:
-      - image: circleci/python:3.6.1
-    
-    steps:
+  build-medium-amd64:
+    machine:
+      image: ubuntu-2004:202101-01
+   
+    working_directory: ~/python-lz4
+    steps:      
       - checkout
       - run:
-          name: install dependencies
+          name: ️️requirements
           command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            sudo apt update && sudo apt upgrade
-            sudo apt-get install -y python-dev libldap2-dev libsasl2-dev libssl-dev
-            sudo apt install curl
-            python --version
-            pip install --upgrade pip
-            curl -sSL https://install.python-poetry.org | python3 -
-            make requirements
-            export PATH="/root/.local/bin:$PATH"
-            make black-check
+             uname -m 
+             apt install python3
+             apt-get install python3-pip
+             pip3 install tox
+             make requirements
       - run:
-          name: run tests
+          name: ️️test
           command: |
-            . venv/bin/activate
-            make isort-check 
-            
+             make test
 workflows:
  version: 2
  python3.9:
    jobs:
-     - lint-unit-39
+     - build-medium-amd64
