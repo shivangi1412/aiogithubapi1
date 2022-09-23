@@ -19,6 +19,7 @@ jobs:
             sudo apt install curl
             python --version
             pip install --upgrade pip
+            curl -sSL https://install.python-poetry.org | python3 -
             make requirements
             export PATH="/root/.local/bin:$PATH"
             make black-check
