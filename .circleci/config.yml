@@ -19,6 +19,7 @@ jobs:
             python --version
             pip install --upgrade pip
             make requirements
+            export PATH="/root/.local/bin:$PATH"
             make black-check
       - run:
           name: run tests
