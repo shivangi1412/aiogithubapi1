@@ -14,8 +14,8 @@ jobs:
           name: ️️requirements
           command: |
              uname -m 
-             apt install python3
-             apt-get install python3-pip
+             sudo apt install python3
+             sudo apt-get install python3-pip
              pip3 install tox
              make requirements
       - run:
