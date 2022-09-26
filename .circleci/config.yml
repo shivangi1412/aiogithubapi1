@@ -21,12 +21,7 @@ jobs:
             apt update && apt install ca-certificates
             update-ca-certificates -f -v
             make requirements
-      - run:
-          name: req
-            python3 setup.py install
-            make black-check
-            make isort-check
-   
+    
 workflows:
  version: 2
  python3.9:
