@@ -6,8 +6,7 @@ help: ## Shows this help message
 	@echo
 
 requirements: install-poetry ## Install requirements
-	@curl -sSL https://install.python-poetry.org | python3 -
-	@export PATH="/home/circleci/.local/bin:$PATH"
+	@poetry install
 	@poetry check
 
 install: ## Install aiogithubapi
@@ -15,7 +14,6 @@ install: ## Install aiogithubapi
 
 install-poetry:
 	@curl -sSL https://install.python-poetry.org | python3 -
-	@export PATH="/home/circleci/.local/bin:$PATH"
 	
 build: ## Build the package
 	@poetry build
