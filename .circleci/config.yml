@@ -12,9 +12,12 @@ jobs:
           name: ️️🏗️ pip dev requirements
           command: |
             uname -m
-            sudo pip install --upgrade virtualenv --progress-bar off
-            python -m venv venv || virtualenv venv && . venv/bin/activate
+            sudo apt-get update
+            sudo apt-get install python3
+            sudo apt-get install python3-pip
+            pip3 install tox
             make requirements
+            python3 setup.py install
             make black-check
             make isort-check
    
