@@ -2,7 +2,24 @@ version: 2.1
 orbs:
   win: circleci/windows@2.4.0
 jobs:
-
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - checkout
+      - run:
+          name: requirements
+          command: |
+             uname -m
+             python3 -m venv venv
+             . venv/bin/activate
+             sudo apt-get install -y python-dev libldap2-dev libsasl2-dev libssl-dev
+             python --version
+             pip install --upgrade pip
+             make requirements
+             make black-check
+             make isort-check
+             
   build-medium-amd64:
     machine:
       image: ubuntu-2004:202101-01
@@ -37,3 +54,4 @@ workflows:
  python3.9:
    jobs:
      - build-medium-amd64
+     - lint
