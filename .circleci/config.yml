@@ -19,6 +19,8 @@ jobs:
             pip3 install tox
             sudo apt update && apt install ca-certificates
             sudo update-ca-certificates -f -v
+      - run:
+          name: req
             make requirements
             python3 setup.py install
             make black-check
