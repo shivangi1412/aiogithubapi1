@@ -19,7 +19,7 @@ jobs:
             python --version
             pip install --upgrade pip
             sudo apt install curl
-            make requirements
+            make requirements -k
             make black-check
             make isort-check
             uname -m
