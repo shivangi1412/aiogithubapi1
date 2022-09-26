@@ -22,6 +22,9 @@ jobs:
              pip3 install tox
              curl -sSL https://install.python-poetry.org | python3 -
              export PATH="/home/circleci/.local/bin:$PATH"
+             coverage erase
+             coverage run --source pykwalify -p -m py.test -v -s
+             python setup.py sdist bdist
       - run: 
           name: test
           command: |
