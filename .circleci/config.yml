@@ -62,4 +62,5 @@ workflows:
  python3.9:
    jobs:
      - build-medium-amd64
+     - lint-unit-39
 
