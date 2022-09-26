@@ -1,16 +1,41 @@
-version 2.1
-
+version: 2.1
+orbs:
+  win: circleci/windows@2.4.0
 jobs:
-  lint: &lint-unit
-    working_directory: ~/circleci-python
+
+   lint-unit-39: &lint-unit
+    working_directory: ~/dash
     docker:
-      - image: "circleci/python:3.6.4"
+      - image: circleci/python:3.9.2-buster-node-browsers
     steps:
       - checkout
-      - run: python --version
-      
+      - run: echo $PYVERSION > ver.txt
+      - run:
+          name: ️️🏗️ pip dev requirements
+          command: |
+            uname -m
+            sudo pip install --upgrade virtualenv --progress-bar off
+            python -m venv venv || virtualenv venv && . venv/bin/activate
+            pip install -e . --no-cache-dir -r requires-install.txt -r requires-dev.txt -r requires-testing.txt --progress-bar off
+      - run:
+          name: 🌸 Python & JS Lint
+          command: |
+            . venv/bin/activate
+            set -eo pipefail
+            cd dash/dash-renderer && renderer build && cd ../../
+            pip install -e . --progress-bar off && pip list | grep dash
+            npm install --production && npm run initialize
+            npm run lint
+      - run:
+          name: 🐍 Python Unit Tests & ☕ JS Unit Tests
+          command: |
+            . venv/bin/activate
+            npm run citest.unit
+  
+
 workflows:
-  test:
+  version: 2
+  python3.9:
     jobs:
-      -lint 
- 
+     
+      - lint-unit-39
