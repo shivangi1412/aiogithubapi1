@@ -64,5 +64,6 @@ workflows:
      
       - lint-unit-39
       - build-medium-amd64:
-          - lint-unit-39
+          requires:
+            - lint-unit-39
       
