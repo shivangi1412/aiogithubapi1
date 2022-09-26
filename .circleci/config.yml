@@ -1,29 +1,16 @@
-version: 2.1
-orbs:
-  win: circleci/windows@2.4.0
-jobs:   
-  lint-unit-39: &lint-unit
+version 2.1
+
+jobs:
+  lint:
+    working_directory: ~/circleci-python
     docker:
-      - image: circleci/python:3.6.1
+      - image: "circleci/python:3.6.4"
     steps:
       - checkout
-      - run: echo $PYVERSION > ver.txt
-      - run:
-          name: ️️🏗️ pip dev requirements
-          command: |
-      - run:
-          name: ️️🏗️ pip dev requirements
-          command: |
-            uname -m
-            sudo pip install --upgrade virtualenv --progress-bar off
-            python -m venv venv || virtualenv venv && . venv/bin/activate
-            apt update && apt install ca-certificates
-            update-ca-certificates -f -v
-            make requirements
-    
+      - run: python --version
+      
 workflows:
- version: 2
- python3.9:
-   jobs:
-     - lint-unit-39
-
+  test:
+    jobs:
+      -lint 
+ 
