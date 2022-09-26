@@ -4,7 +4,8 @@ orbs:
 jobs:
   lint:
     name: lint
-    runs-on: ubuntu-latest
+     docker:
+      - image: circleci/python:3.6.1
     steps:
       - checkout
       - run:
