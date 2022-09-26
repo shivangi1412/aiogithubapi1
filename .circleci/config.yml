@@ -3,67 +3,35 @@ orbs:
   win: circleci/windows@2.4.0
 jobs:   
   lint-unit-39: &lint-unit
+    working_directory: ~/dash
     docker:
       - image: circleci/python:3.6.1
-
-    
     steps:
       - checkout
+      - restore_cache:
+          key: dep-{{ checksum ".circleci/config.yml" }}-{{ checksum "ver.txt" }}-{{ checksum "requires-dev.txt" }}-{{ checksum "requires-install.txt" }}-{{ checksum "requires-testing.txt" }}
       - run:
-          name: install dependencies
+          name: ️️🏗️ pip dev requirements
           command: |
-            python3 -m venv venv
+            uname -m
+            sudo pip install --upgrade virtualenv --progress-bar off
+            python -m venv venv || virtualenv venv && . venv/bin/activate
+            pip install -e . --no-cache-dir -r requires-install.txt -r requires-dev.txt -r requires-testing.txt --progress-bar off
+      - save_cache:
+          key: dep-{{ checksum ".circleci/config.yml" }}-{{ checksum "ver.txt" }}-{{ checksum "requires-dev.txt" }}-{{ checksum "requires-install.txt" }}-{{ checksum "requires-testing.txt" }}
+          paths:
+            - venv
+      - run:
+          name: 🌸 Python & JS Lint
+          command: |
             . venv/bin/activate
-            sudo apt-get update
-            sudo apt-get install -y python-dev libldap2-dev libsasl2-dev libssl-dev
-            python --version
-            pip install --upgrade pip
-            sudo apt update && sudo apt upgrade
-            sudo apt install curl
-            curl --version
-            make requirements -k
+            make requirements
             make black-check
             make isort-check
-            uname -m
-            pip --version
-      - run:
-          name: run tests
-          command: |
-            . venv/bin/activate
-            black --check setup.py flask_appbuilder 
-  build-medium-amd64:
-    machine:
-      image: ubuntu-2004:202101-01
-   
-    working_directory: ~/python-lz4
-    steps:      
-      - checkout
-      - run:
-          name: ️️requirements
-          command: |
-             uname -m 
-             python3 -m venv venv
-             . venv/bin/activate
-             sudo apt-get update
-             sudo apt install python3
-             sudo apt-get install python3-pip
-             pip3 install tox
-             pip install coverage
-             pip install pytest
-             pip install aiohttp
-             curl -sSL https://install.python-poetry.org | python3 -
-             export PATH="/home/circleci/.local/bin:$PATH"
-             coverage erase
-             coverage run --source pykwalify -p -m py.test -v -s
-             python setup.py sdist bdist
-      - run: 
-          name: test
-          command: |
-             make test
+     
 workflows:
  version: 2
  python3.9:
    jobs:
-     - build-medium-amd64
      - lint-unit-39
 
