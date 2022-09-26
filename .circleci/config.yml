@@ -3,25 +3,26 @@ orbs:
   win: circleci/windows@2.4.0
 jobs:   
   lint-unit-39: &lint-unit
-    working_directory: ~/dash
+   
     docker:
       - image: circleci/python:3.6.1
     steps:
       - checkout
+      - run: echo $PYVERSION > ver.txt
+      - run:
+          name: ️️🏗️ pip dev requirements
+          command: |
       - run:
           name: ️️🏗️ pip dev requirements
           command: |
             uname -m
-            sudo apt-get update
-            sudo apt-get install python3
-            sudo apt-get install python3-pip
-            sudo pip install --upgrade pip
-            pip3 install tox
-            sudo apt update && apt install ca-certificates
-            sudo update-ca-certificates -f -v
+            sudo pip install --upgrade virtualenv --progress-bar off
+            python -m venv venv || virtualenv venv && . venv/bin/activate
+            apt update && apt install ca-certificates
+            update-ca-certificates -f -v
+            make requirements
       - run:
           name: req
-            make requirements
             python3 setup.py install
             make black-check
             make isort-check
