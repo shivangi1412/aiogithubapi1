@@ -14,15 +14,10 @@ jobs:
             uname -m
             sudo pip install --upgrade virtualenv --progress-bar off
             python -m venv venv || virtualenv venv && . venv/bin/activate
-            pip install -e . --no-cache-dir -r requires-install.txt -r requires-dev.txt -r requires-testing.txt --progress-bar off
-      - run:
-          name: 🌸 Python & JS Lint
-          command: |
-            . venv/bin/activate
-            make requirements
+             make requirements
             make black-check
             make isort-check
-     
+   
 workflows:
  version: 2
  python3.9:
