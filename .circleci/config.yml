@@ -56,9 +56,10 @@ jobs:
             make requirements
             make black-check
             make isort-check     
-  build-medium-amd64:
-    machine:
-      image: ubuntu-2004:202101-01
+    
+    build-medium-amd64:
+     machine:
+       image: ubuntu-2004:202101-01
    
     working_directory: ~/dash
     steps:      
