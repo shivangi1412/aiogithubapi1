@@ -3,7 +3,6 @@ orbs:
   win: circleci/windows@2.4.0
 jobs:   
   lint-unit-39: &lint-unit
-   
     docker:
       - image: circleci/python:3.6.1
     steps:
