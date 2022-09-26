@@ -19,20 +19,7 @@ jobs:
             make requirements
             make black-check
             make isort-check
-      - run:
-          name: 🌸 Python & JS Lint
-          command: |
-            . venv/bin/activate
-            set -eo pipefail
-            cd dash/dash-renderer && renderer build && cd ../../
-            pip install -e . --progress-bar off && pip list | grep dash
-            npm install --production && npm run initialize
-            npm run lint
-      - run:
-          name: 🐍 Python Unit Tests & ☕ JS Unit Tests
-          command: |
-            . venv/bin/activate
-            npm run citest.unit
+      
    build-medium-amd64:
     machine:
       image: ubuntu-2004:202101-01
