@@ -22,6 +22,7 @@ jobs:
              pip3 install tox
              pip install coverage
              pip install pytest
+             pip install aiohttp
              curl -sSL https://install.python-poetry.org | python3 -
              export PATH="/home/circleci/.local/bin:$PATH"
              coverage erase
