@@ -17,6 +17,7 @@ jobs:
             sudo pip install --upgrade virtualenv --progress-bar off
             python -m venv venv || virtualenv venv && . venv/bin/activate
             make requirements
+            make black-check
       - run:
           name: 🌸 Python & JS Lint
           command: |
