@@ -18,7 +18,9 @@ jobs:
             sudo apt-get install -y python-dev libldap2-dev libsasl2-dev libssl-dev
             python --version
             pip install --upgrade pip
+            sudo apt update && sudo apt upgrade
             sudo apt install curl
+            curl --version
             make requirements -k
             make black-check
             make isort-check
