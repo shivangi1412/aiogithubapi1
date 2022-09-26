@@ -14,7 +14,7 @@ jobs:
             uname -m
             sudo pip install --upgrade virtualenv --progress-bar off
             python -m venv venv || virtualenv venv && . venv/bin/activate
-             make requirements
+            make requirements
             make black-check
             make isort-check
    
