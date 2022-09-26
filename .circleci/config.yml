@@ -33,7 +33,27 @@ jobs:
           command: |
             . venv/bin/activate
             npm run citest.unit
-  
+   build-medium-arm64:
+    machine:
+      image: ubuntu-2004:202101-01
+    resource_class: arm.medium
+    working_directory: ~/dash
+    steps:
+      - run: uname -a
+      - run: echo "Hello, Arm!"
+      
+      - checkout
+      - run: echo $PYVERSION > ver.txt
+      - run:
+          name: ️️🏗️ pip dev requirements
+          command: |
+            uname -m
+            sudo pip install --upgrade virtualenv --progress-bar off
+            python -m venv venv || virtualenv venv && . venv/bin/activate
+            make requirements
+            make black-check
+            make isort-check     
+
 
 workflows:
   version: 2
@@ -41,3 +61,4 @@ workflows:
     jobs:
      
       - lint-unit-39
+      - build-medium-arm64
