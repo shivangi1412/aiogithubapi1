@@ -18,6 +18,7 @@ jobs:
             python -m venv venv || virtualenv venv && . venv/bin/activate
             make requirements
             make black-check
+            make isort-check
       - run:
           name: 🌸 Python & JS Lint
           command: |
