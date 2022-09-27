@@ -9,12 +9,13 @@ jobs:
       - image: circleci/python:3.9.2-buster-node-browsers
     steps:
       - checkout
-      - run: echo $PYVERSION > ver.txt
       - run:
           name: ️️🏗️ pip dev requirements
           command: |
             uname -m
             sudo pip install --upgrade virtualenv --progress-bar off
+            sudo apt update
+            sudo apt install python3
             python -m venv venv || virtualenv venv && . venv/bin/activate
             make requirements
             make black-check
