@@ -40,14 +40,9 @@ jobs:
              curl -sSL https://install.python-poetry.org | python3 -
              export PATH="/home/circleci/.local/bin:$PATH"
              make requirements
-      - run:
-          name: ️️test
-          command: |
              make test
-             make build
+      
     
-  
-
 workflows:
   version: 2
   python3.9:
